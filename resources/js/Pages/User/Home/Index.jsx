@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Spinner from "@/Components/Elements/Spinner";
 import ProductCard from "@/Components/Fragments/ProductCard";
 
-const Home = ({ auth }) => {
+const Home = ({ auth, category }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const handleImageLoad = () => {
@@ -15,9 +15,7 @@ const Home = ({ auth }) => {
 
     return (
         <UserLayout auth={auth} title="Beranda">
-            <div className="py-4 max-w-screen-xl">
-                <CategoryProduct />
-            </div>
+            <CategoryProduct data={category} />
 
             <div className="relative h-56 overflow-hidden rounded-lg md:h-[500px]">
                 {isLoading && (
