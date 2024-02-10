@@ -1,7 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Carousel = ({ data }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [imagesLoaded, setImagesLoaded] = useState(false);
+
+    useEffect(() => {
+        const imagePromises = data.map((item) => {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = `image/${item.src}`;
+                img.onload = () => resolve();
+                img.onerror = () => reject();
+            });
+        });
+
+        Promise.all(imagePromises)
+            .then(() => setImagesLoaded(true))
+            .catch((error) => console.error("Failed to load images:", error));
+    }, [data]);
 
     const handlePrevSlide = () => {
         setCurrentSlide((prevSlide) =>
@@ -23,21 +39,22 @@ const Carousel = ({ data }) => {
         >
             <div className="relative h-56 overflow-hidden rounded-lg md:h-[500px]">
                 {/* Slide Items */}
-                {data.map((item, index) => (
-                    <div
-                        key={index}
-                        className={`duration-700 ease-in-out ${
-                            index === currentSlide ? "" : "hidden"
-                        }`}
-                        data-carousel-item
-                    >
-                        <img
-                            src={`image/${item.src}`}
-                            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            alt={item.alt}
-                        />
-                    </div>
-                ))}
+                {imagesLoaded &&
+                    data.map((item, index) => (
+                        <div
+                            key={index}
+                            className={`duration-700 ease-in-out ${
+                                index === currentSlide ? "" : "hidden"
+                            }`}
+                            data-carousel-item
+                        >
+                            <img
+                                src={`image/${item.src}`}
+                                className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                alt={item.alt}
+                            />
+                        </div>
+                    ))}
             </div>
             {/* Slider indicators */}
             <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">

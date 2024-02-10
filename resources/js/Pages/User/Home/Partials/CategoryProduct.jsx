@@ -20,7 +20,16 @@ const CategoryProduct = () => {
                 Accessories
             </span>
             <span className="bg-slate-100 text-slate-800 text-xs md:text-sm font-medium px-3 py-1 rounded-full">
-                Watch
+                Watches
+            </span>
+            <span className="bg-slate-100 text-slate-800 text-xs md:text-sm font-medium px-3 py-1 rounded-full">
+                Underwear
+            </span>
+            <span className="bg-slate-100 text-slate-800 text-xs md:text-sm font-medium px-3 py-1 rounded-full">
+                Gloves
+            </span>
+            <span className="bg-slate-100 text-slate-800 text-xs md:text-sm font-medium px-3 py-1 rounded-full">
+                Eyewear
             </span>
         </div>
     );

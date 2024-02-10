@@ -32,21 +32,18 @@ const Navbar = ({ auth }) => {
                 <div className="col-span-3 flex items-center justify-center">
                     <form className="w-full">
                         <div className="relative">
-                            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <SearchIcon className="w-5 h-5" />
-                            </div>
                             <input
                                 type="search"
                                 id="default-search"
-                                className="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="Search Product, Category..."
+                                className="block w-full p-3 ps-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Search Product..."
                                 required
                             />
                             <button
                                 type="submit"
-                                className="text-white absolute end-2.5 lg:px-6 lg:py-2 lg:bottom-1 px-4 py-1 bottom-2 bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm"
+                                className="text-white absolute end-2.5 lg:px-4 lg:py-2 lg:bottom-1 px-2 py-1 bottom-2 bg-stone-600 hover:bg-stone-500 font-medium rounded-lg"
                             >
-                                Search
+                                <SearchIcon className="w-5 h-5" fill="white" />
                             </button>
                         </div>
                     </form>
