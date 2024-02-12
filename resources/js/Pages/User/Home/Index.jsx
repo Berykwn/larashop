@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import Spinner from "@/Components/Elements/Spinner";
 import ProductCard from "@/Components/Fragments/ProductCard";
 
-const Home = ({ auth, category }) => {
+const Home = ({ auth, category, products }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const handleImageLoad = () => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 2000);
+        }, 1500);
     };
 
     return (
@@ -33,9 +33,18 @@ const Home = ({ auth, category }) => {
 
             <div className="mt-6">
                 <h5 className="font-medium text-2xl">Recomendation products</h5>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-y-8 mt-4">
-                    <ProductCard />
-                </div>
+                {products.length ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-y-8 mt-4">
+                        {products.map((item, index) => (
+                            <ProductCard key={index} data={item} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="mt-4 p-4 mb-4 text-sm w-full lg:w-3/4 text-red-800 rounded-lg bg-red-50 ">
+                        <span className="font-medium">Product not found!</span>{" "}
+                        Change a few things up and try submitting again.
+                    </div>
+                )}
             </div>
         </UserLayout>
     );

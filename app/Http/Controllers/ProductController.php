@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function userIndex()
     {
-        //
+        $categories = Category::select('id', 'name')->get();
+
+        $products = Product::with('categories')->latest()->paginate(10);
+
+        return Inertia::render('User/Product/Index', [
+            'category' => $categories,
+            'products' => $products
+        ]);
     }
 
     /**

@@ -257,21 +257,21 @@ const Navbar = ({ auth }) => {
                 <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
                     <ul className="flex flex-wrap -mb-px">
                         <li className="me-2">
-                            <a
-                                href="#"
+                            <Link
+                                href={route('user.home')}
                                 className="inline-block p-4 text-red-600 border-b-2 border-red-300 rounded-t-lg active"
                                 aria-current="page"
                             >
                                 Beranda
-                            </a>
+                            </Link>
                         </li>
                         <li className="me-2">
-                            <a
-                                href="#"
+                            <Link
+                                href={route('user.products')}
                                 className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
                             >
                                 Products
-                            </a>
+                            </Link>
                         </li>
                         <li className="me-2">
                             <a
