@@ -14,7 +14,7 @@ const Home = ({ auth, category, products }) => {
     };
 
     return (
-        <UserLayout auth={auth} title="Beranda">
+        <UserLayout auth={auth} title="Beranda" page="home">
             <CategoryProduct data={category} />
 
             <div className="relative h-56 overflow-hidden rounded-lg md:h-[500px]">

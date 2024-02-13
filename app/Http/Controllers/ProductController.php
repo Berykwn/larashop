@@ -16,7 +16,7 @@ class ProductController extends Controller
     {
         $categories = Category::select('id', 'name')->get();
 
-        $products = Product::with('categories')->latest()->paginate(10);
+        $products = Product::with('categories')->latest()->paginate(12);
 
         return Inertia::render('User/Product/Index', [
             'category' => $categories,

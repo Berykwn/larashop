@@ -1,5 +1,6 @@
 import React from "react";
 import LoveIcon from "../Icons/Love";
+import { Link } from "@inertiajs/react";
 
 const ProductCard = ({ data }) => {
     function formatToRupiah(price) {
@@ -11,14 +12,14 @@ const ProductCard = ({ data }) => {
     }
 
     return (
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+        <div className="bg-white rounded-lg overflow-hidden shadow max-w-xl w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
             <div className="relative">
                 <img
                     className="w-full"
                     src={data.thumbnail}
                     alt="Product Image"
                 />
-                <div className="absolute top-0 right-0 bg-indigo-500 text-white px-2 py-1 m-2 rounded-md text-sm font-medium">
+                <div className="absolute top-0 right-0 bg-red-400 text-white px-2 py-1 m-2 rounded-md text-sm font-medium">
                     {data.tag}
                 </div>
             </div>
@@ -49,11 +50,9 @@ const ProductCard = ({ data }) => {
                     <span className="font-bold text-md">
                         {formatToRupiah(data.price)}
                     </span>
-                    <div className="flex gap-2">
-                        <span className="bg-white hover:bg-slate-400 hover:text-white border border-slate-300 text-sm font-meidum text-slate-700 rounded p-2">
-                            Detail
-                        </span>
-                    </div>
+                    {/* <Link className="text-xs font-meidum bg-white hover:bg-slate-400 hover:text-white border border-slate-300 text-slate-700 rounded p-2">
+                        Detail
+                    </Link> */}
                 </div>
             </div>
         </div>

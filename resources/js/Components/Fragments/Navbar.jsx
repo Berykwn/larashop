@@ -9,7 +9,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import ArrowDownIcon from "@/Components/Icons/ArrowDown";
 import LoveIcon from "@/Components/Icons/Love";
 
-const Navbar = ({ auth }) => {
+const Navbar = ({ auth, page }) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -24,13 +24,13 @@ const Navbar = ({ auth }) => {
                     <div className="flex flex-col items-center text-center my-2">
                         <ApplicationLogo className="w-12 h-12 fill-current text-gray-500" />
                         <span className="-mt-1 text-xs font-semibold">
-                            Lara<span className="text-[#E78895]">shop.</span>
+                            Lara<span className="text-red-400">shop.</span>
                         </span>
                     </div>
                 </Link>
 
                 <div className="col-span-3 flex items-center justify-center">
-                    <form className="w-full">
+                    <form className="lg:w-full md:w-4/5 w-3/4">
                         <div className="relative">
                             <input
                                 type="search"
@@ -57,13 +57,13 @@ const Navbar = ({ auth }) => {
                                         <div className="flex gap-2">
                                             <Link
                                                 href={route("login")}
-                                                className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 transition ease-in-out duration-150"
                                             >
                                                 Login
                                             </Link>
                                             <Link
                                                 href={route("register")}
-                                                className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 transition ease-in-out duration-150"
                                             >
                                                 Register
                                             </Link>
@@ -258,8 +258,12 @@ const Navbar = ({ auth }) => {
                     <ul className="flex flex-wrap -mb-px">
                         <li className="me-2">
                             <Link
-                                href={route('user.home')}
-                                className="inline-block p-4 text-red-600 border-b-2 border-red-300 rounded-t-lg active"
+                                href={route("user.home")}
+                                className={`inline-block p-4 hover:text-gray-600 hover:border-gray-300 ${
+                                    page === "home"
+                                        ? "text-red-600 border-b-2 border-red-300"
+                                        : "border-b-2 border-transparent"
+                                }`}
                                 aria-current="page"
                             >
                                 Beranda
@@ -267,27 +271,31 @@ const Navbar = ({ auth }) => {
                         </li>
                         <li className="me-2">
                             <Link
-                                href={route('user.products')}
-                                className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                href={route("user.products")}
+                                className={`inline-block p-4 hover:text-gray-600 hover:border-gray-300 ${
+                                    page === "products"
+                                        ? "text-red-600 border-b-2 border-red-300"
+                                        : "border-b-2 border-transparent"
+                                }`}
                             >
                                 Products
                             </Link>
                         </li>
                         <li className="me-2">
-                            <a
+                            <Link
                                 href="#"
                                 className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
                             >
                                 About
-                            </a>
+                            </Link>
                         </li>
                         <li className="me-2">
-                            <a
+                            <Link
                                 href="#"
                                 className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
                             >
                                 Contact
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>
