@@ -31,7 +31,7 @@ const Home = ({ auth, category, products }) => {
                 />
             </div>
 
-            <div className="mt-6">
+            <div className="my-6">
                 <h5 className="font-medium text-2xl">Recomendation products</h5>
                 {products.length ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-y-8 mt-4">
