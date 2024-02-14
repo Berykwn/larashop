@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         $categories = Category::select('id', 'name')->get();
 
-        $products = Product::with('categories')->take(4)->latest()->get();
+        $products = Product::select('id', 'name', 'price', 'description', 'tag', 'thumbnail')->take(4)->latest()->get();
 
         return Inertia::render('User/Home/Index', [
             'category' => $categories,

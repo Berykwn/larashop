@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import Checkbox from "@/Components/Checkbox";
+import Checkbox from "@/Components/Elements/Input/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/Elements/Input/InputError";
+import InputLabel from "@/Components/Elements/Input/InputLabel";
+import PrimaryButton from "@/Components/Elements/Button/PrimaryButton";
+import TextInput from "@/Components/Elements/Input/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 import EmailIcon from "@/Components/Icons/Email";
 import PasswordIcon from "@/Components/Icons/Password";

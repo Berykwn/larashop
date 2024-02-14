@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import SearchIcon from "@/Components/Icons/Search";
+import React, { lazy, useState } from "react";
 import { Link } from "@inertiajs/react";
-import ShoppingCartIcon from "@/Components/Icons/ShoppingCart";
-import TransactionReportIcon from "@/Components/Icons/TransactionReport";
-import Dropdown from "@/Components/Dropdown";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import ArrowDownIcon from "@/Components/Icons/ArrowDown";
-import LoveIcon from "@/Components/Icons/Love";
+
+import Dropdown from "@/Components/Fragments/Dropdown";
+import ResponsiveNavLink from "@/Components/Elements/ResponsiveNavLink";
+
+const ApplicationLogo = lazy(() => import("@/Components/Elements/ApplicationLogo"));
+const SearchIcon = lazy(() => import("@/Components/Icons/Search"));
+const ShoppingCartIcon = lazy(() => import("@/Components/Icons/ShoppingCart"));
+const TransactionReportIcon = lazy(() =>
+    import("@/Components/Icons/TransactionReport")
+);
+const ArrowDownIcon = lazy(() => import("@/Components/Icons/ArrowDown"));
+const LoveIcon = lazy(() => import("@/Components/Icons/Love"));
 
 const Navbar = ({ auth, page }) => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -49,7 +53,7 @@ const Navbar = ({ auth, page }) => {
                     </form>
                 </div>
                 <div className="col-span-1 flex justify-end">
-                    <ul className="font-medium flex flex-col p-4 md:p-0  md:flex-row md:space-x-8 rtl:space-x-reverse">
+                    <ul className="font-medium flex flex-col p-4 md:p-0 md:flex-row md:space-x-8 rtl:space-x-reverse">
                         {!auth.user ? (
                             <li className="lg:relative flex gap-2">
                                 <div className="hidden sm:flex sm:items-center sm:ms-6">
@@ -69,43 +73,6 @@ const Navbar = ({ auth, page }) => {
                                             </Link>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="-me-2 flex items-center sm:hidden">
-                                    <button
-                                        onClick={toggleNavigationDropdown}
-                                        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                                    >
-                                        <svg
-                                            className="h-6 w-6"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                className={
-                                                    !showingNavigationDropdown
-                                                        ? "inline-flex"
-                                                        : "hidden"
-                                                }
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M4 6h16M4 12h16M4 18h16"
-                                            />
-                                            <path
-                                                className={
-                                                    showingNavigationDropdown
-                                                        ? "inline-flex"
-                                                        : "hidden"
-                                                }
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
                                 </div>
                             </li>
                         ) : (
@@ -157,150 +124,157 @@ const Navbar = ({ auth, page }) => {
                                         </Dropdown>
                                     </div>
                                 </div>
-
-                                <div className="-me-2 flex items-center sm:hidden">
-                                    <button
-                                        onClick={toggleNavigationDropdown}
-                                        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                                    >
-                                        <svg
-                                            className="h-6 w-6"
-                                            stroke="currentColor"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                className={
-                                                    !showingNavigationDropdown
-                                                        ? "inline-flex"
-                                                        : "hidden"
-                                                }
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M4 6h16M4 12h16M4 18h16"
-                                            />
-                                            <path
-                                                className={
-                                                    showingNavigationDropdown
-                                                        ? "inline-flex"
-                                                        : "hidden"
-                                                }
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
                             </li>
                         )}
-                    </ul>
-                </div>
-            </div>
-            {/* Navigation Dropdown */}
-            {!auth.user && showingNavigationDropdown && (
-                <div className="block sm:hidden shadow-xl">
-                    <div className="pt-2 pb-3 space-y-1">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                <div className="flex justify-center gap-2">
-                                    <Link
-                                        href={route("login")}
-                                        className="lg:text-md text-sm font medium text-slate-600 mt-0.5"
-                                    >
-                                        Login
-                                    </Link>
-                                    {" | "}
-                                    <Link
-                                        href={route("register")}
-                                        className="lg:text-md text-sm font medium text-slate-600 mt-0.5"
-                                    >
-                                        Register
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {auth.user && showingNavigationDropdown && (
-                <div className="block sm:hidden shadow-xl">
-                    <div className="pt-2 pb-3 space-y-1">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                {auth.user.name}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">
-                                {auth.user.email}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="pb-1 border-t border-gray-200">
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route("profile.edit")}>
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route("logout")}
-                                as="button"
+                        <li className="-me-2 flex items-center sm:hidden">
+                            <button
+                                onClick={toggleNavigationDropdown}
+                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                             >
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
-                </div>
-            )}
-            <div className="flex justify-center">
-                <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
-                    <ul className="flex flex-wrap -mb-px">
-                        <li className="me-2">
-                            <Link
-                                href={route("user.home")}
-                                className={`inline-block p-4 hover:text-gray-600 hover:border-gray-300 ${
-                                    page === "home"
-                                        ? "text-red-600 border-b-2 border-red-300"
-                                        : "border-b-2 border-transparent"
-                                }`}
-                                aria-current="page"
-                            >
-                                Beranda
-                            </Link>
-                        </li>
-                        <li className="me-2">
-                            <Link
-                                href={route("user.products")}
-                                className={`inline-block p-4 hover:text-gray-600 hover:border-gray-300 ${
-                                    page === "products"
-                                        ? "text-red-600 border-b-2 border-red-300"
-                                        : "border-b-2 border-transparent"
-                                }`}
-                            >
-                                Products
-                            </Link>
-                        </li>
-                        <li className="me-2">
-                            <Link
-                                href="#"
-                                className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                            >
-                                About
-                            </Link>
-                        </li>
-                        <li className="me-2">
-                            <Link
-                                href="#"
-                                className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
-                            >
-                                Contact
-                            </Link>
+                                <svg
+                                    className="h-6 w-6"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        className={
+                                            !showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                    <path
+                                        className={
+                                            showingNavigationDropdown
+                                                ? "inline-flex"
+                                                : "hidden"
+                                        }
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
                         </li>
                     </ul>
                 </div>
             </div>
+            {showingNavigationDropdown && (
+                <div className="block sm:hidden shadow-xl">
+                    <div className="pt-2 pb-3 space-y-1">
+                        <div className="px-4">
+                            <div className="font-medium text-base text-gray-800">
+                                {auth.user ? (
+                                    <>
+                                        <div className="flex justify-center gap-2">
+                                            <span className="lg:text-md text-sm font-medium text-slate-600 mt-0.5">
+                                                {auth.user.name}
+                                            </span>
+                                            <div className="font-medium text-sm text-gray-500">
+                                                {auth.user.email}
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="flex justify-center gap-2">
+                                            <Link
+                                                href={route("login")}
+                                                className="lg:text-md text-sm font-medium text-slate-600 mt-0.5"
+                                            >
+                                                Login
+                                            </Link>
+                                            {" | "}
+                                            <Link
+                                                href={route("register")}
+                                                className="lg:text-md text-sm font-medium text-slate-600 mt-0.5"
+                                            >
+                                                Register
+                                            </Link>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    {auth.user && (
+                        <div className="pb-1 border-t border-gray-200">
+                            <div className="mt-3 space-y-1">
+                                <ResponsiveNavLink href={route("profile.edit")}>
+                                    Profile
+                                </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    method="post"
+                                    href={route("logout")}
+                                    as="button"
+                                >
+                                    Log Out
+                                </ResponsiveNavLink>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            )}
+            <NavLink page={page} />
         </nav>
+    );
+};
+
+const NavLink = ({ page }) => {
+    return (
+        <div className="flex justify-center">
+            <div className="text-sm font-medium text-center text-gray-500">
+                <ul className="flex flex-wrap -mb-px">
+                    <li className="me-2">
+                        <Link
+                            href={route("user.home")}
+                            className={`inline-block p-4 hover:text-gray-600 hover:border-gray-300 ${
+                                page === "home"
+                                    ? "text-red-600 border-b-2 border-red-300"
+                                    : "border-b-2 border-transparent"
+                            }`}
+                            aria-current="page"
+                        >
+                            Beranda
+                        </Link>
+                    </li>
+                    <li className="me-2">
+                        <Link
+                            href={route("user.products")}
+                            className={`inline-block p-4 hover:text-gray-600 hover:border-gray-300 ${
+                                page === "products"
+                                    ? "text-red-600 border-b-2 border-red-300"
+                                    : "border-b-2 border-transparent"
+                            }`}
+                        >
+                            Products
+                        </Link>
+                    </li>
+                    <li className="me-2">
+                        <Link
+                            href="#"
+                            className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                        >
+                            About
+                        </Link>
+                    </li>
+                    <li className="me-2">
+                        <Link
+                            href="#"
+                            className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                        >
+                            Contact
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        </div>
     );
 };
 
