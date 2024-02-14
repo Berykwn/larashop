@@ -32,7 +32,8 @@ Route::get('/', [HomeController::class, 'index'])->name('user.home');
 Route::get('/products', [ProductController::class, 'index'])->name('user.products');
 Route::get('/products/show', [ProductController::class, 'show'])->name('user.product.show');
 
-Route::post('/cart/add/{productId}', [CartController::class, 'addToCart']);
+Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
+Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('user.addToCart');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

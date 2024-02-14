@@ -1,9 +1,13 @@
-import React from 'react'
+import UserLayout from "@/Layouts/UserLayout";
+import React from "react";
 
-const Index = () => {
-  return (
-    <div>Index</div>
-  )
-}
+const Index = ({ auth, cart }) => {
+    console.log(cart);
+    return (
+        <UserLayout auth={auth} title="Cart" page="cart">
 
-export default Index
+        </UserLayout>
+    );
+};
+
+export default Index;
