@@ -1,24 +1,21 @@
 import CartPlusIcon from "@/Components/Icons/CartPlus";
 import LoveIcon from "@/Components/Icons/Love";
-import MinusIcon from "@/Components/Icons/Minus";
-import PlusIcon from "@/Components/Icons/Plus";
-import usePriceFormated from "@/Hooks/usePriceFormated";
 import UserLayout from "@/Layouts/UserLayout";
+import usePriceFormated from "@/Hooks/usePriceFormated";
+
+import { router } from "@inertiajs/react";
 import React, { useState } from "react";
 
 const Show = ({ auth, products }) => {
-    const formattedPrice = usePriceFormated(products.price);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
-    const handleIncrement = () => {
-        setQuantity((prevQuantity) => prevQuantity + 1);
+    const handleAddToCart = () => {
+        router.post(`/cart/add/${products.id}`, {
+            product_id: products.id,
+            quantity: quantity,
+        });
     };
 
-    const handleDecrement = () => {
-        setQuantity((prevQuantity) =>
-            prevQuantity > 0 ? prevQuantity - 1 : 0
-        );
-    };
     return (
         <UserLayout auth={auth} title="Show Product" page="products">
             <section className="lg:py-8 overflow-hidden bg-white font-poppins">
@@ -147,9 +144,11 @@ const Show = ({ auth, products }) => {
                                     </p>
 
                                     <p className="inline-block text-2xl font-semibold text-gray-700 ">
-                                        <span>{formattedPrice}</span>
+                                        <span>
+                                            {usePriceFormated(products.price)}
+                                        </span>
                                         <span className="ml-2 text-base font-normal text-gray-500 line-through">
-                                            {formattedPrice}
+                                            {usePriceFormated(products.price)}
                                         </span>
                                     </p>
                                 </div>
@@ -157,51 +156,29 @@ const Show = ({ auth, products }) => {
                                 <div className="flex flex-wrap items-center ">
                                     <div className="mb-4 mr-4 lg:mb-0">
                                         <div className="w-28">
-                                            <form className="max-w-xs mx-auto">
-                                                <div className="relative flex items-center max-w-[8rem]">
-                                                    <button
-                                                        type="button"
-                                                        id="decrement-button"
-                                                        onClick={
-                                                            handleDecrement
-                                                        }
-                                                        className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-l-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
-                                                    >
-                                                        <MinusIcon
-                                                            className="w-3 h-3 text-gray-900"
-                                                            fill="none"
-                                                        />
-                                                    </button>
-                                                    <input
-                                                        type="text"
-                                                        id="quantity-input"
-                                                        data-input-counter
-                                                        value={quantity}
-                                                        readOnly
-                                                        aria-describedby="helper-text-explanation"
-                                                        className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 placeholder-gray-400"
-                                                        placeholder="999"
-                                                        required
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        id="increment-button"
-                                                        onClick={
-                                                            handleIncrement
-                                                        }
-                                                        className="bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-r-lg p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none"
-                                                    >
-                                                        <PlusIcon
-                                                            className="w-3 h-3 text-gray-900"
-                                                            fill="none"
-                                                        />
-                                                    </button>
-                                                </div>
-                                            </form>
+                                            <div className="col-span-2 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-1">
+                                                <input
+                                                    type="number"
+                                                    id="quantity"
+                                                    aria-describedby="helper-text-explanation"
+                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                    min="1"
+                                                    name="quantity"
+                                                    value={quantity}
+                                                    onChange={(e) =>
+                                                        setQuantity(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="mb-4 mr-4 lg:mb-0">
-                                        <button className="w-full h-10 p-2 mr-4 bg-red-500 text-gray-50 hover:bg-red-600 ">
+                                        <button
+                                            className="w-full h-10 p-2 mr-4 bg-red-500 text-gray-50 hover:bg-red-600"
+                                            onClick={handleAddToCart}
+                                        >
                                             Buy Now
                                         </button>
                                     </div>
