@@ -34,6 +34,7 @@ Route::get('/products/show', [ProductController::class, 'show'])->name('user.pro
 
 Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('user.addToCart');
+Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('user.cart.delete');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

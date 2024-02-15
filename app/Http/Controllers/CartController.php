@@ -16,7 +16,17 @@ class CartController extends Controller
     {
         $cart = Cart::with(['product'])->where(['user_id' => Auth::id()])->latest()->get();
 
-        return Inertia::render('User/Cart/Index', ['cart' => $cart]);
+        $amount = 0;
+
+        foreach ($cart as $cartItem) {
+            $amount += $cartItem->product->price * $cartItem->quantity;
+        }
+
+
+        return Inertia::render('User/Cart/Index', [
+            'cart' => $cart,
+            'amount' => $amount
+        ]);
     }
 
     public function addToCart(Request $request, $productId)
@@ -44,9 +54,16 @@ class CartController extends Controller
             Cart::create($cartItem);
         }
 
-        return redirect()->route('user.home')->with('message', 'The product has been added to the cart!');
+        return redirect()->route('user.cart')->with('message', 'The product has been added to the cart!');
     }
 
+    public function removeFromCart($cartId)
+    {
+        $cart = Cart::findOrFail($cartId);
+        $cart->delete();
 
+        return redirect()->route('user.cart')->with('message', 'Product removed from cart successfully!');
+
+    }
 
 }

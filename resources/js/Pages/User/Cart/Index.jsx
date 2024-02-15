@@ -1,17 +1,42 @@
 import Breadcrumb from "@/Components/Elements/Breadcrumb";
+import DangerButton from "@/Components/Elements/Button/DangerButton";
+import TextInput from "@/Components/Elements/Input/TextInput";
+import Modal from "@/Components/Fragments/Modal";
 import usePriceFormated from "@/Hooks/usePriceFormated";
 import UserLayout from "@/Layouts/UserLayout";
-import { Link } from "@inertiajs/react";
-import React from "react";
+import { Link, router } from "@inertiajs/react";
+import React, { useState } from "react";
 
-const Index = ({ auth, cart }) => {
-    console.log(cart);
+const Index = ({ auth, cart, amount, flash }) => {
+    const [openingModal, setOpeningModal] = useState(false);
+
+    const openModal = () => {
+        setOpeningModal(true);
+    };
+
+    const closeModal = () => {
+        setOpeningModal(false);
+    };
     return (
         <UserLayout auth={auth} title="Cart" page="cart">
             <section className="lg:py-8 overflow-hidden bg-white font-poppins">
                 <div className="max-w-6xl mx-auto">
                     <Breadcrumb data={["Beranda", "Cart", "My cart"]} />
                     <h5 className="font-semibold text-xl mt-2">My Cart</h5>
+
+                    {flash.message && (
+                        <div className="my-3">
+                            <div
+                                className="bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-3"
+                                role="alert"
+                            >
+                                <p className="font-bold">
+                                    Informational message
+                                </p>
+                                <p className="text-sm">{flash.message}</p>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="pt-4 relative overflow-x-auto rounded">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500 border-b">
@@ -81,12 +106,15 @@ const Index = ({ auth, cart }) => {
                                                 )}
                                             </td>
                                             <td className="py-4">
-                                                <a
-                                                    href="#"
-                                                    className="font-medium text-red-600 dark:text-red-500 hover:underline"
+                                                <DangerButton
+                                                    onClick={() => {
+                                                        router.delete(
+                                                            `/cart/remove/${item.id}`
+                                                        );
+                                                    }}
                                                 >
                                                     Remove
-                                                </a>
+                                                </DangerButton>
                                             </td>
                                         </tr>
                                     ))
@@ -109,7 +137,7 @@ const Index = ({ auth, cart }) => {
                             <h5 className="text-md font-medium text-gray-500">
                                 Sub total:{" "}
                                 <span className="text-lg font-semibold text-black">
-                                    {usePriceFormated(100000)}
+                                    {usePriceFormated(amount)}
                                 </span>{" "}
                             </h5>
                         </div>
@@ -124,11 +152,82 @@ const Index = ({ auth, cart }) => {
 
                         <div className="flex justify-end py-3 gap-2">
                             {" "}
-                            <Link className="w-auto h-10 p-2 bg-gray-500 text-gray-50 hover:bg-gray-600">
+                            <Link
+                                href={route("user.products")}
+                                className="w-auto h-10 p-2 bg-gray-500 text-gray-50 hover:bg-gray-600"
+                            >
                                 Go Back
                             </Link>
-                            <button className="w-auto h-10 p-2 bg-red-500 text-gray-50 hover:bg-red-600">
-                                Buy Now
+                            <Modal show={openingModal} onClose={closeModal}>
+                                <div className="p-8">
+                                    <h5 className="font-semibold text-lg">
+                                        Order Information
+                                    </h5>
+                                    <span className="text-xs">
+                                        Lorem ipsum dolor sit amet consectetur
+                                        adipisicing elit. Itaque, cupiditate.
+                                    </span>
+
+                                    <form>
+                                        <div className="mt-4">
+                                            <label
+                                                for="username"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            >
+                                                Username
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="username"
+                                                aria-describedby="helper-text-explanation"
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                                                placeholder="name@flowbite.com"
+                                            />
+                                        </div>
+                                        <div className="mt-4">
+                                            <label
+                                                for="address"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            >
+                                                Address
+                                            </label>
+                                            <textarea
+                                                id="address"
+                                                rows="4"
+                                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="Input your address..."
+                                            ></textarea>
+                                        </div>
+                                        <div className="mt-4">
+                                            <label
+                                                for="notes"
+                                                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                            >
+                                                Notes
+                                            </label>
+                                            <textarea
+                                                id="notes"
+                                                rows="4"
+                                                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="notes..."
+                                            ></textarea>
+                                        </div>
+                                        <div className="flex justify-end mt-4 gap-1">
+                                            <button className="w-auto h-10 p-2 rounded bg-gray-500 text-gray-50 hover:bg-gray-600">
+                                                Cancel
+                                            </button>
+                                            <button className="w-auto h-10 p-2 rounded bg-yellow-500 text-gray-50 hover:bg-yellow-600">
+                                                Checkout
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </Modal>
+                            <button
+                                onClick={openModal}
+                                className="w-auto h-10 p-2 bg-yellow-500 text-gray-50 hover:bg-yellow-600"
+                            >
+                                Checkout
                             </button>
                         </div>
                     </div>

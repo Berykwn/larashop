@@ -28,7 +28,7 @@ const Navbar = ({ auth, page }) => {
                     <div className="flex flex-col items-center text-center my-2">
                         <ApplicationLogo className="w-12 h-12 fill-current text-gray-500" />
                         <span className="-mt-1 text-xs font-semibold">
-                            Lara<span className="text-red-400">shop.</span>
+                            Lara<span className="text-yellow-600">shop.</span>
                         </span>
                     </div>
                 </Link>

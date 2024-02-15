@@ -12,7 +12,7 @@ const Footer = () => {
                                 <ApplicationLogo className="w-12 h-12 fill-current text-gray-500" />
                                 <span className="-mt-1 text-xs font-semibold">
                                     Lara
-                                    <span className="text-red-400">shop.</span>
+                                    <span className="text-yellow-600">shop.</span>
                                 </span>
                             </div>
                         </a>
