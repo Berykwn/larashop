@@ -1,6 +1,5 @@
 import Breadcrumb from "@/Components/Elements/Breadcrumb";
 import DangerButton from "@/Components/Elements/Button/DangerButton";
-import TextInput from "@/Components/Elements/Input/TextInput";
 import Modal from "@/Components/Fragments/Modal";
 import usePriceFormated from "@/Hooks/usePriceFormated";
 import UserLayout from "@/Layouts/UserLayout";
@@ -17,6 +16,27 @@ const Index = ({ auth, cart, amount, flash }) => {
     const closeModal = () => {
         setOpeningModal(false);
     };
+
+    const [formValues, setFormValues] = useState({
+        address: "",
+        note: "",
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("address", formValues.address);
+        formData.append("note", formValues.note);
+        formData.append("amount", amount);
+
+        router.post("/order/create", formData);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
+    };
+
     return (
         <UserLayout auth={auth} title="Cart" page="cart">
             <section className="lg:py-8 overflow-hidden bg-white font-poppins">
@@ -158,6 +178,14 @@ const Index = ({ auth, cart, amount, flash }) => {
                             >
                                 Go Back
                             </Link>
+                            <button
+                                onClick={openModal}
+                                disabled={cart.length < 1}
+                                className="w-auto h-10 p-2 bg-yellow-500 text-gray-50 hover:bg-yellow-600"
+                            >
+                                Checkout
+                            </button>
+                            
                             <Modal show={openingModal} onClose={closeModal}>
                                 <div className="p-8">
                                     <h5 className="font-semibold text-lg">
@@ -168,10 +196,10 @@ const Index = ({ auth, cart, amount, flash }) => {
                                         adipisicing elit. Itaque, cupiditate.
                                     </span>
 
-                                    <form>
+                                    <form onSubmit={handleSubmit}>
                                         <div className="mt-4">
                                             <label
-                                                for="username"
+                                                htmlFor="username"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                             >
                                                 Username
@@ -181,18 +209,23 @@ const Index = ({ auth, cart, amount, flash }) => {
                                                 id="username"
                                                 aria-describedby="helper-text-explanation"
                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                                                placeholder="name@flowbite.com"
+                                                placeholder={auth.user.name}
+                                                disabled
                                             />
                                         </div>
                                         <div className="mt-4">
                                             <label
-                                                for="address"
+                                                htmlFor="address"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                             >
                                                 Address
                                             </label>
+
                                             <textarea
                                                 id="address"
+                                                name="address"
+                                                value={formValues.address}
+                                                onChange={handleChange}
                                                 rows="4"
                                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="Input your address..."
@@ -200,35 +233,38 @@ const Index = ({ auth, cart, amount, flash }) => {
                                         </div>
                                         <div className="mt-4">
                                             <label
-                                                for="notes"
+                                                htmlFor="note"
                                                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                             >
                                                 Notes
                                             </label>
                                             <textarea
-                                                id="notes"
+                                                id="note"
+                                                name="note"
+                                                value={formValues.note}
+                                                onChange={handleChange}
                                                 rows="4"
                                                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="notes..."
                                             ></textarea>
                                         </div>
                                         <div className="flex justify-end mt-4 gap-1">
-                                            <button className="w-auto h-10 p-2 rounded bg-gray-500 text-gray-50 hover:bg-gray-600">
+                                            <button
+                                                onClick={closeModal}
+                                                className="w-auto h-10 p-2 rounded bg-gray-500 text-gray-50 hover:bg-gray-600"
+                                            >
                                                 Cancel
                                             </button>
-                                            <button className="w-auto h-10 p-2 rounded bg-yellow-500 text-gray-50 hover:bg-yellow-600">
+                                            <button
+                                                type="submit"
+                                                className="w-auto h-10 p-2 rounded bg-yellow-500 text-gray-50 hover:bg-yellow-600"
+                                            >
                                                 Checkout
                                             </button>
                                         </div>
                                     </form>
                                 </div>
                             </Modal>
-                            <button
-                                onClick={openModal}
-                                className="w-auto h-10 p-2 bg-yellow-500 text-gray-50 hover:bg-yellow-600"
-                            >
-                                Checkout
-                            </button>
                         </div>
                     </div>
                 </div>
