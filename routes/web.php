@@ -37,8 +37,10 @@ Route::get('/cart', [CartController::class, 'index'])->name('user.cart');
 Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('user.addToCart');
 Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('user.cart.delete');
 
-Route::post('/order/create', [OrderController::class, 'create'])->name('user.order.create');
 Route::get('/orders/', [OrderController::class, 'index'])->name('user.orders');
+Route::post('/order/create', [OrderController::class, 'create'])->name('user.order.create');
+Route::post('/order/payment/{id}', [OrderController::class, 'payment'])->name('user.order.payment');
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -50,4 +52,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

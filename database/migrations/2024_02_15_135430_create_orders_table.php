@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->decimal('amount', 10, 2);
             $table->text('address');
             $table->text('note')->nullable();
+            $table->string('snap_token')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
 
