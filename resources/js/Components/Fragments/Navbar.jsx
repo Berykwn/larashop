@@ -4,7 +4,9 @@ import { Link } from "@inertiajs/react";
 import Dropdown from "@/Components/Fragments/Dropdown";
 import ResponsiveNavLink from "@/Components/Elements/ResponsiveNavLink";
 
-const ApplicationLogo = lazy(() => import("@/Components/Elements/ApplicationLogo"));
+const ApplicationLogo = lazy(() =>
+    import("@/Components/Elements/ApplicationLogo")
+);
 const SearchIcon = lazy(() => import("@/Components/Icons/Search"));
 const ShoppingCartIcon = lazy(() => import("@/Components/Icons/ShoppingCart"));
 const TransactionReportIcon = lazy(() =>
@@ -82,14 +84,18 @@ const Navbar = ({ auth, page }) => {
                                         className="w-6 mr-2"
                                         fill="#57534e"
                                     />
-                                    <ShoppingCartIcon
-                                        className="w-6 mr-2"
-                                        fill="#57534e"
-                                    />
-                                    <TransactionReportIcon
-                                        className="w-6"
-                                        fill="#57534e"
-                                    />
+                                    <Link href={route("user.cart")}>
+                                        <ShoppingCartIcon
+                                            className="w-6 mr-2"
+                                            fill="#57534e"
+                                        />
+                                    </Link>
+                                    <Link href={route("user.orders")}>
+                                        <TransactionReportIcon
+                                            className="w-6"
+                                            fill="#57534e"
+                                        />
+                                    </Link>
                                     <div className="ms-3 relative">
                                         <Dropdown>
                                             <Dropdown.Trigger>

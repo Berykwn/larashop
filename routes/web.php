@@ -38,6 +38,7 @@ Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name
 Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('user.cart.delete');
 
 Route::post('/order/create', [OrderController::class, 'create'])->name('user.order.create');
+Route::get('/orders/', [OrderController::class, 'index'])->name('user.orders');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

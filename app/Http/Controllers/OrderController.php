@@ -2,25 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderRequest;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Product;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
-    public function create(Request $request)
+    public function index()
+    {
+        $order = Order::select('id', 'amount', 'status', 'created_at')->latest()->orderByDesc('created_at')->get();
+
+        return Inertia::render('User/Order/Index', [
+            'order' => $order
+        ]);
+    }
+    public function create(OrderRequest $request)
     {
         try {
+
+            $validatedData = $request->validated();
             // Simpan order
             $order = new Order([
                 'user_id' => Auth::id(),
-                'address' => $request->address,
-                'note' => $request->note,
-                'amount' => $request->amount,
+                'address' => $validatedData['address'],
+                'note' => $validatedData['note'],
+                'amount' => $validatedData['amount'],
             ]);
 
             $order->save();
@@ -41,14 +51,12 @@ class OrderController extends Controller
                 Cart::where('id', $item->id)->delete();
             }
 
-
-            return redirect()->route('user.cart')->with('message', 'Order success!');
+            return redirect()->route('user.orders')->with('message', 'Order success!');
         } catch (QueryException $e) {
             // Tangani kesalahan saat menyimpan data ke database
             return redirect()->back()->with('error', 'Error occurred while processing your request.');
-        } catch (\Exception $e) {
-            // Tangani kesalahan umum
-            return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+
 }
