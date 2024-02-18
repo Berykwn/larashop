@@ -23,6 +23,18 @@ class OrderController extends Controller
         ]);
     }
 
+    public function show(Order $order, OrderItem $orderItem, Request $request)
+    {
+        $orders = $order->find($request->id);
+
+        $orderItem = OrderItem::with(['product'])->where(['order_id' => $orders->id])->get();
+
+        return Inertia::render('User/Order/Show', [
+            'order' => $orders,
+            'orderItem' => $orderItem
+        ]);
+    }
+
     public function create(OrderRequest $request)
     {
         try {

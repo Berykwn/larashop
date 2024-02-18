@@ -74,7 +74,7 @@ const Index = ({ auth, order, flash }) => {
         <UserLayout auth={auth} title="Order" page="order">
             <section className="lg:py-8 overflow-hidden bg-white font-poppins">
                 <div className="max-w-6xl mx-auto">
-                    <Breadcrumb data={["Beranda", "Order", "My Transaction"]} />
+                    <Breadcrumb data={["Beranda", "Order", "My Order"]} />
 
                     <h5 className="font-semibold text-xl mt-2">My Order</h5>
 
@@ -151,7 +151,13 @@ const Index = ({ auth, order, flash }) => {
                                                     Pay
                                                 </SecondaryButton>
 
-                                                <Link className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-sm text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 disabled:opacity-25 transition ease-in-out duration-150">
+                                                <Link
+                                                    href={route(
+                                                        "user.orders.show"
+                                                    )}
+                                                    data={{ id: item.id }}
+                                                    className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-sm text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 disabled:opacity-25 transition ease-in-out duration-150"
+                                                >
                                                     <EyeIcon />
                                                     Detail
                                                 </Link>

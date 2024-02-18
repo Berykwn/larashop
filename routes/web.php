@@ -38,6 +38,7 @@ Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name
 Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('user.cart.delete');
 
 Route::get('/orders/', [OrderController::class, 'index'])->name('user.orders');
+Route::get('/orders/show', [OrderController::class, 'show'])->name('user.orders.show');
 Route::post('/order/create', [OrderController::class, 'create'])->name('user.order.create');
 Route::post('/order/payment/{id}', [OrderController::class, 'payment'])->name('user.order.payment');
 
