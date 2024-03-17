@@ -1,5 +1,7 @@
 how to install
 
+copy env.example menjadi .env
+
 //lakukan migrasi database menggunakan perintah
 php artisan migrate --seed
 
