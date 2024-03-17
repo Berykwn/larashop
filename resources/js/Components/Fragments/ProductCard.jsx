@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import LoveIcon from "../Icons/Love";
 import { Link } from "@inertiajs/react";
 import Spinner from "../Elements/Spinner";
 import usePriceFormated from "@/Hooks/usePriceFormated";
 
-const ProductCard = ({ data }) => {
+const ProductCard = ({ data, categories }) => {
+    console.log(categories);
     const formattedPrice = usePriceFormated(data.price);
 
     const [isLoading, setIsLoading] = useState(true);
@@ -16,7 +16,7 @@ const ProductCard = ({ data }) => {
     };
 
     return (
-        <Link href={route('user.product.show')} data={{ id: data.id }} className="">
+        <Link href={route("user.product.show")} data={{ id: data.id }}>
             <div className="bg-white rounded-lg overflow-hidden shadow max-w-xl w-full sm:max-w-md md:max-w-lg lg:max-w-xl hover:shadow-md">
                 <div className="relative">
                     <img
@@ -40,9 +40,6 @@ const ProductCard = ({ data }) => {
                         <h3 className="text-lg font-medium mb-2">
                             {data.name}
                         </h3>
-                        <span>
-                            <LoveIcon className="w-5 mt-0.5" />
-                        </span>
                     </div>
 
                     <p className="text-gray-600 text-sm mb-2">

@@ -36,7 +36,11 @@ const Home = ({ auth, category, products }) => {
                 {products.length ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-y-8 mt-4">
                         {products.map((item, index) => (
-                            <ProductCard key={index} data={item} />
+                            <ProductCard
+                                key={index}
+                                data={item}
+                                categories={category}
+                            />
                         ))}
                     </div>
                 ) : (
